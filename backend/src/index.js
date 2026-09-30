@@ -7,6 +7,7 @@ import job from "./lib/cron.js";
 import clerkWebhook from "./webhooks/clerk.webhook.js";
 import fs from "fs";
 import path from "path";
+import authRoutes from "./routes/auth.route.js";
 dotenv.config();
 connectDB();
 
@@ -24,6 +25,8 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use(clerkMiddleware());
+
+app.use("/api/auth",authRoutes);
 if(fs.existsSync(publicDir)) {
   app.use(express.static(publicDir));
   app.get("/{*splat}", (req, res) => {
