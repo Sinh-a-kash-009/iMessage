@@ -9,10 +9,10 @@ import fs from "fs";
 import path from "path";
 import authRoutes from "./routes/auth.route.js";
 import messageRoutes from "./routes/message.route.js";
+import { app,server } from "./lib/socket.js";
 dotenv.config();
 connectDB();
 
-const app = express();
 const PORT = process.env.PORT;
 const FRONTEND_URL = process.env.FRONTEND_URL;
 const publicDir = path.join(process.cwd(), "public");
@@ -35,7 +35,7 @@ if(fs.existsSync(publicDir)) {
     res.sendFile(path.join(publicDir, "index.html"));
   });
 }
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
   if (process.env.NODE_ENV === "production") {
     job.start();
