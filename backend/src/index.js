@@ -8,6 +8,7 @@ import clerkWebhook from "./webhooks/clerk.webhook.js";
 import fs from "fs";
 import path from "path";
 import authRoutes from "./routes/auth.route.js";
+import messageRoutes from "./routes/message.route.js";
 dotenv.config();
 connectDB();
 
@@ -27,6 +28,7 @@ app.use(express.json());
 app.use(clerkMiddleware());
 
 app.use("/api/auth",authRoutes);
+app.use("/api/messages",messageRoutes);
 if(fs.existsSync(publicDir)) {
   app.use(express.static(publicDir));
   app.get("/{*splat}", (req, res) => {
